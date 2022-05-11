@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: perf-consumer
+spec:
+  replicas: 120
+  selector:
+    matchLabels:
+      app: pulsar
+      component: perf-consumer
+      release: astraproduction-azure-pulsar-eastus
+  template:
+    metadata:
+      annotations:
+        prometheus.io/path: /metrics/
+        prometheus.io/port: "8080"
+        prometheus.io/scrape: "true"
+      creationTimestamp: null
+      labels:
+        app: pulsar
+        cluster: pulsar-azure-eastus
+        component: perf-consumer
+        release: astraproduction-azure-pulsar-eastus
+    spec:
+      containers:
+      - name: go-perf-job
+        command: 
+        - ./perf
+        - consume
+        - -u
+        - pulsar://pulsar-azure-eastus-broker:6650
+        - --token-file
+        - /pulsar/token-superuser/superuser.jwt
+        - -s
+        - testsubname
+        - -t
+        - shared
+        - public/default/ming
+
+        image: itestmycode/pulsar-goperf:0.0.3
+        imagePullPolicy: IfNotPresent
+        name: pulsar-azure-eastus-bastion
+        resources:
+          requests:
+            cpu: 50m
+            memory: 24Mi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /pulsar/token-admin
+          name: token-admin
+          readOnly: true
+        - mountPath: /pulsar/token-superuser
+          name: token-superuser
+          readOnly: true
+      volumes:
+      - name: token-admin
+        secret:
+          defaultMode: 420
+          secretName: token-admin
+      - name: token-superuser
+        secret:
+          defaultMode: 420
+          secretName: token-superuser
