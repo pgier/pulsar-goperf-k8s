@@ -19,6 +19,7 @@ package main
 
 import (
 	"encoding/json"
+	"strings"
 	"sync/atomic"
 	"time"
 
@@ -34,6 +35,7 @@ type ConsumeArgs struct {
 	Topic             string
 	SubscriptionName  string
 	ReceiverQueueSize int
+	SubscriptionType  pulsar.SubscriptionType
 }
 
 func newConsumerCommand() *cobra.Command {
@@ -53,8 +55,11 @@ func newConsumerCommand() *cobra.Command {
 	}
 
 	flags := cmd.Flags()
+	var subType string
 	flags.StringVarP(&consumeArgs.SubscriptionName, "subscription", "s", "sub", "Subscription name")
 	flags.IntVarP(&consumeArgs.ReceiverQueueSize, "receiver-queue-size", "r", 1000, "Receiver queue size")
+	flags.StringVarP(&subType, "subscription-type", "t", "shared", "subscription type: exclusive, failover, shared, key-shared")
+	consumeArgs.SubscriptionType = toSubType(subType)
 
 	return cmd
 }
@@ -76,6 +81,7 @@ func consume(consumeArgs *ConsumeArgs, stop <-chan struct{}) {
 	consumer, err := client.Subscribe(pulsar.ConsumerOptions{
 		Topic:            consumeArgs.Topic,
 		SubscriptionName: consumeArgs.SubscriptionName,
+		Type:             consumeArgs.SubscriptionType,
 	})
 
 	if err != nil {
@@ -112,5 +118,18 @@ func consume(consumeArgs *ConsumeArgs, stop <-chan struct{}) {
 		case <-stop:
 			return
 		}
+	}
+}
+
+func toSubType(subType string) pulsar.SubscriptionType {
+	switch strings.ToLower(subType) {
+	case "shared":
+		return pulsar.Shared
+	case "key-shared":
+		return pulsar.KeyShared
+	case "failover":
+		return pulsar.Failover
+	default:
+		return pulsar.Exclusive
 	}
 }

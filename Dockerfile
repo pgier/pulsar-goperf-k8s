@@ -38,4 +38,4 @@ COPY --from=builder /go/bin/gops /root/bin
 COPY --from=builder /root/src/perf /root/bin
 
 # Command to run the executable
-ENTRYPOINT ["sleep 1234567890"]
+# ENTRYPOINT []

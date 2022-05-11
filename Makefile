@@ -18,8 +18,8 @@ all: push
 # Docker tag with v prefix to differentiate the official release build, triggered by git tagging
 # this is pushed to datastax Dockerhub repo
 #
-TAG ?= 0.0.1
-PREFIX ?= zzzming/pulsar-goperf
+TAG ?= 0.0.3
+PREFIX ?= itestmycode/pulsar-goperf
 GIT_COMMIT = $(shell git rev-list -1 HEAD)
 
 goperf:
