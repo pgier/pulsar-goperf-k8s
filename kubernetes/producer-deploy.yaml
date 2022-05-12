@@ -37,12 +37,12 @@ spec:
         - --token-file
         - /pulsar/token-superuser/superuser.jwt
         - -r
-        - '2000'
-        - public/default/ming
+        - '800'
+        - public/default/ming2
 
         image: itestmycode/pulsar-goperf:0.0.3
         imagePullPolicy: IfNotPresent
-        name: pulsar-azure-eastus-bastion
+        name: pulsar-goperf-producer-eastus
         resources:
           requests:
             cpu: 50m
