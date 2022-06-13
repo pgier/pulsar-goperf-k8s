@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: perf-consumer
 spec:
-  replicas: 120
+  replicas: 1
   selector:
     matchLabels:
       app: pulsar
