@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: perf-producer
 spec:
-  replicas: 100
+  replicas: 1
   selector:
     matchLabels:
       app: pulsar
