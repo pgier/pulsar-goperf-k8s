@@ -33,12 +33,13 @@ import (
 
 // ProduceArgs define the parameters required by produce
 type ProduceArgs struct {
-	Topic              string
-	Rate               int
-	BatchingTimeMillis int
-	BatchingMaxSize    int
-	MessageSize        int
-	ProducerQueueSize  int
+	Topic               string
+	Rate                int
+	BatchingTimeMillis  int
+	BatchingMaxSize     int
+	BatchingMaxMessages int
+	MessageSize         int
+	ProducerQueueSize   int
 }
 
 func newProducerCommand() *cobra.Command {
@@ -65,6 +66,8 @@ func newProducerCommand() *cobra.Command {
 		"Batching grouping time in millis")
 	flags.IntVarP(&produceArgs.BatchingMaxSize, "batching-max-size", "", 128,
 		"Max size of a batch (in KB)")
+	flags.IntVarP(&produceArgs.BatchingMaxMessages, "batching-max-messages", "m", 1000,
+		"Max size of a batch (in KB)")
 	flags.IntVarP(&produceArgs.MessageSize, "size", "s", 1024,
 		"Message size")
 	flags.IntVarP(&produceArgs.ProducerQueueSize, "queue-size", "q", 1000,
@@ -90,7 +93,9 @@ func produce(produceArgs *ProduceArgs, stop <-chan struct{}) {
 		MaxPendingMessages:      produceArgs.ProducerQueueSize,
 		BatchingMaxPublishDelay: time.Millisecond * time.Duration(produceArgs.BatchingTimeMillis),
 		BatchingMaxSize:         uint(produceArgs.BatchingMaxSize * 1024),
+		BatchingMaxMessages:     uint(produceArgs.BatchingMaxMessages),
 	})
+	log.Infof("batching max messags %d", uint(produceArgs.BatchingMaxMessages))
 	if err != nil {
 		log.Fatal(err)
 	}
