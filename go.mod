@@ -54,3 +54,5 @@ require (
 	google.golang.org/protobuf v1.26.0 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
 )
+
+replace github.com/apache/pulsar-client-go => github.com/datastax/pulsar-client-go v0.8.1-datastax-1
