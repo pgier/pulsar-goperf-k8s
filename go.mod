@@ -3,15 +3,21 @@ module github.com/zzzming/pulsar-goperf-k8s
 go 1.17
 
 require (
+	github.com/apache/pulsar-client-go v0.8.1
+	github.com/beefsack/go-rate v0.0.0-20220214233405-116f4ca011a0
+	github.com/bmizerany/perks v0.0.0-20141205001514-d9a9656a3a4b
+	github.com/prometheus/client_golang v1.12.1
+	github.com/sirupsen/logrus v1.6.0
+	github.com/spf13/cobra v1.4.0
+)
+
+require (
 	github.com/99designs/keyring v1.1.6 // indirect
 	github.com/AthenZ/athenz v1.10.39 // indirect
 	github.com/DataDog/zstd v1.5.0 // indirect
-	github.com/apache/pulsar-client-go v0.8.1 // indirect
 	github.com/apache/pulsar-client-go/oauth2 v0.0.0-20220120090717-25e59572242e // indirect
 	github.com/ardielle/ardielle-go v1.5.2 // indirect
-	github.com/beefsack/go-rate v0.0.0-20220214233405-116f4ca011a0 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
-	github.com/bmizerany/perks v0.0.0-20141205001514-d9a9656a3a4b // indirect
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/danieljoos/wincred v1.0.2 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
@@ -33,13 +39,10 @@ require (
 	github.com/pierrec/lz4 v2.0.5+incompatible // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
-	github.com/prometheus/client_golang v1.12.1 // indirect
 	github.com/prometheus/client_model v0.2.0 // indirect
 	github.com/prometheus/common v0.32.1 // indirect
 	github.com/prometheus/procfs v0.7.3 // indirect
-	github.com/sirupsen/logrus v1.6.0 // indirect
 	github.com/spaolacci/murmur3 v1.1.0 // indirect
-	github.com/spf13/cobra v1.4.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/stretchr/testify v1.7.0 // indirect
 	go.uber.org/atomic v1.7.0 // indirect
